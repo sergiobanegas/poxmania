@@ -1,0 +1,59 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Login - Poxmania</title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>    	
+	<div id="contenedor">        
+		<div th:include="header :: #copy"></div>	
+		<span class="text-warning" th:if="${pedidosinusuario}==true">
+				<span class="glyphicon glyphicon-warning-sign"></span>
+				 ¡No puedes hacer un pedido sin identificarte!
+		</span>		
+		<div class="row">			
+			<div class="panel panel-default col-lg-5">
+				<form  method="post" action="/validacion">
+					<p class="row">
+						<strong>¿Eres YA CLIENTE de Poxmania? </strong>
+					</p>
+					<p class="row">Introduce tus identificantes por favor:</p>
+					<p class="row">
+						<span class="col-lg-4">Tu dirección de correo electrónico</span>
+						<input class="col-lg-6" name="correo" type="text" placeholder="Tu dirección de correo electrónico" required="required"/>         		
+					</p>
+					<p class="row">
+						<span class="col-lg-4">Tu contraseña</span>
+						<input class="col-lg-6" name="pass" type="password" placeholder="Tu contraseña " required="required"/>
+					</p>
+					<p class="row">
+						<b class="text-danger" th:text="${error}"></b>
+					</p>
+					<input class="btn btn-primary row col-lg-offset-4" type="submit" value="Continuar"/>
+				</form>
+			</div>
+			<div class="panel panel-default col-lg-5 col-lg-offset-1">
+				<form method="get" action="/signin">
+					<p class="row">
+						<strong>¿Eres un NUEVO cliente? </strong>
+					</p>
+					<p class="row">Vamos a proceder a la creación de tu cuenta</p>
+					<p class="row">
+						<span class="col-lg-4">Tu dirección de correo electrónico</span>
+						<input class="col-lg-6" name="correo" type="email" placeholder="Tu dirección de correo electrónico" required="required"/>                        	
+					</p>
+					<p>
+						<b class="text-danger" th:text="${errorcorreo}"></b>
+					</p>
+					<input class="btn btn-primary row col-lg-offset-4" type="submit" value="Como crear una cuenta"/>
+				</form>
+			</div>
+		</div>
+		<div th:include="footer :: #copy"></div>
+	</div>
+</body>
+</html>

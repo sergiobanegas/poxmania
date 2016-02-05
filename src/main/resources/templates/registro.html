@@ -1,0 +1,64 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Registro | Poxmania</title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div id="contenedor">
+		<div th:include="header :: #copy"></div>
+		<form method="post" action="/registrarusuario" >
+		<div class="row panel panel-default">
+			<h4 class="col-lg-2">Tu login</h4>
+			<div class="col-lg-9 col-lg-offset-1">
+				<p>
+					E-mail*
+					<input name="correo" type="email" th:value="${correo}" required="required"/>
+					<b class="text-danger" th:text="${errorcorreo}"></b>
+				</p>
+				<p>
+					Contraseña* 
+					<input name="pass" type="password" required="required"/>
+				</p>
+				<p>
+					Confirmación de contraseña* 
+					<input name="pass2" type="password" required="required"/>
+				</p>
+				<b class="text-danger" th:text="${errorpass}"></b>
+				<p>
+					Usuario* 
+					<input name="nombre" size="40" type="text" required="required"/>
+					<b class="text-danger" th:text="${errornombre}"></b>
+				</p>
+			</div>
+		</div>
+		<div class="row panel panel-default">
+			<h4 class="col-lg-2">Datos personales</h4>
+				<div class="col-lg-9 col-lg-offset-1">
+					<p>
+						Nombre y Apellidos* 
+						<input name="nombrecompleto" size="40" type="text" required="required"/>
+					</p>
+					<p>
+						Teléfono*
+						<input name="telefono" size="40" type="text" required="required"/>
+					</p>
+					<p>
+						Dirección*
+						<input name="direccion" size="40" type="text" required="required"/>
+					</p>
+					<p>
+						<input class="btn btn-primary" type="submit" value="Continuar"/>
+					</p>
+				</div>
+			</div>
+		</form>
+		<div th:include="footer :: #copy"></div>
+	</div>
+</body>
+</html>

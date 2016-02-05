@@ -1,0 +1,117 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Mi carrito | Poxmania</title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div id="contenedor">
+		<div th:include="header :: #copy"></div>
+		<div class="row">
+			<div class="row">
+				<h1 class="text-primary">Mi cesta</h1>
+			</div>
+			<div class="row">
+				<div class="col-lg-9">
+					<div th:if="${session.carrito}!=null">
+						<div th:each="producto, iterador : ${session.carrito.listaproductos}">
+							<div class="row panel panel-default">
+ 								<a class="col-lg-2" th:href="@{/mostrarproductocarrito(nombre=${producto.nombre})}">
+									<img width="80px" th:src="|/imagenes/Productos/${producto.imagen}|"></img>
+								</a>
+								<div class="col-lg-7">
+									<a class="nombreproductolista" th:href="@{/mostrarproductocarrito(nombre=${producto.nombre})}" th:text="${producto.nombre}"></a>
+									<div th:if="${producto.cantidad}>0">
+										<div class="row">
+											<span class="glyphicon glyphicon-ok ok"></span>
+											<span>En Stock.</span>
+										</div>
+									</div>
+									<div th:unless="${producto.cantidad}>0">
+										<div class="row">
+											<span class="glyphicon glyphicon-remove delete"></span>
+											<span>Temporalmente indisponible</span>
+										</div>
+									</div>
+									<p class="row">
+										<b>Cantidad: </b>
+										<a th:text="${producto.cantidad}"></a>
+										<span th:if="${superado}==${producto.nombre}">
+											<a class="text-warning">El stock del producto se ha superado, se ha actualizado la cantidad al stock disponible.</a>
+										</span>
+									</p>
+									<div class="row">
+										<form method="post" action="/modificarcantidad">
+											<input type="number" min="1"  name="cantidad" th:value="${producto.cantidad}"/>
+											<input type="hidden" name="nombre" th:value="${producto.nombre}"/>
+											<input type="submit" value="Actualizar cantidad"/>
+										</form>
+										<a th:href="@{/modificarcantidad(nombre=${producto.nombre}, cantidad=0)}" class="row"><span class="glyphicon glyphicon-remove delete"></span>Eliminar</a>
+									</div>
+								</div>
+								<div class="col-lg-3">      
+									<span class="precioproductolista">     
+										<span th:text="|${producto.precio}€|"></span>    
+									</span>
+ 									<span class="IVAincluido">IVA incluido</span>
+								</div>
+							</div>                                 
+						</div>
+						<div class="row panel panel-default">
+							<div class="col-lg-5">
+								<b>Importe total:</b>
+								(gastos de envío incluidos)
+							</div>
+							<div class="col-lg-4 col-lg-offset-3">
+								<span class="preciogrande">         
+									<span th:text="|${session.carrito.factura()}€|"></span>
+								</span>
+								<span class="IVAincluido">IVA incluido</span>
+							</div>
+						</div>
+					</div>
+					<div th:unless="${session.carrito}!=null">
+						<div class="col-lg-9 panel panel-default text-center">
+							<div th:if="${carritovaciopedido}==true">
+								<h3 class="text-warning">
+									<span class="glyphicon glyphicon-warning-sign"></span>
+									¡No puedes hacer un pedido con la cesta vacía!
+								</h3>
+							</div>
+							<div th:unless="${carritovaciopedido}==true">
+								<div th:if="${pedidorealizado}==true">
+									<h2 class="text-success">¡Pedido realizado con éxito!</h2>
+								</div>
+								<div th:unless="${pedidorealizado}==true">
+									<h2 class="text-primary">No hay productos en la cesta</h2>
+								</div>								
+							</div>							                                	
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 panel panel-default">
+					<a href="/realizarpedido" class="btn btn-primary row center-block">Hacer mi pedido</a>
+					<div class="col-lg-5">
+						<b>Importe total:</b>
+					</div>
+					<div class="col-lg-6 col-lg-offset-1">
+						<div th:if="${session.carrito}!=null">
+							<span class="precioproductolista" th:text="|${session.carrito.factura()}€|"></span>
+						</div>
+						<div th:unless="${session.carrito}!=null">
+							<span class="precioproductolista">0.0€</span>
+						</div>
+						<span class="IVAincluido">IVA incluido</span>
+					</div>
+					<div class="row col-lg-11 col-lg-offset-1">(gastos de envío incluidos)</div>
+				</div>
+			</div>
+		</div>
+		<div th:include="footer :: #copy"></div>
+	</div>
+</body>
+</html>

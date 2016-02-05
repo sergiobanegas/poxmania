@@ -1,0 +1,80 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title th:text="|Administración - Modificar producto ${producto.nombre}- Poxmanía|"></title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>	
+	<div id="contenedor">
+		<div th:include="administracion/menuadministracion :: #copy"></div>            
+		<div class="row">
+			<h2 class="text-primary" th:text="|Modificación de producto: ${producto.nombre}|"></h2>
+			<div th:if="${errorprecio}==true">            
+				<span class="text-danger">    
+					<span class="glyphicon glyphicon-remove"></span>
+				</span>
+				<b class="text-danger">Introduzca un precio válido</b>
+			</div>	
+			<div th:if="${error}==false">
+				<span class="text-success">
+				<span class="glyphicon glyphicon-floppy-saved"></span>
+					<b>Producto modificado correctamente</b>
+				</span>
+			</div>
+			<div th:if="${error}==true">
+				<span class="text-danger">
+					<span class="glyphicon glyphicon-remove"></span>
+					<b>Error en cambiar la imagen</b>
+				</span>
+			</div>
+			<div th:if="${imagenexiste}==true">
+				<span class="text-danger">
+					<span class="glyphicon glyphicon-remove"></span>
+					<b>Ya existe una imagen con ese nombre</b>
+				</span>
+			</div>
+			<div class="panel panel-default">
+				<form  method= "post" action='./modificar' enctype="multipart/form-data">
+					<input type="hidden" name="id" th:value="${producto.id}"/>
+					<div class="row well">
+						<span class="col-lg-2">
+							<b>Precio:</b>
+							<input type='text' name='precio' th:value="${producto.precio}"/>
+						</span>
+						<span class="col-lg-2">
+							<b>Stock:</b>
+							<input type='number' min="0" name='cantidad' th:value="${producto.unidades}"/>
+						</span>
+						<span class="col-lg-4">
+							<b>Imagen:</b> <input type="file" name="imagen"/>
+						</span>
+						<span class="col-lg-4">
+							<b>Nombre para la nueva imagen:</b> <input type="text" name="nombreimagen"/> 
+						</span>
+					</div>
+					<div class="row well">
+						<span class="col-lg-5">
+							<b>Nueva descripción:</b>
+							<textarea class="form-control" name='descripcion' rows="5" style="width: 450px;" maxlength="1000" th:value="${producto.descripcion}"></textarea>
+						</span>
+					</div> 
+					<div class="col-lg-3">
+						<input type='submit' class="btn btn-primary col-lg-12" value='Editar producto'/>
+					</div>                               
+				</form>
+				<div class="col-lg-3 col-lg-offset-6">
+					<form method="get" action='./borrarproducto'>
+						<input type='hidden' name='id' th:value="${producto.id}"/>
+						<input type='submit' class="btn btn-danger col-lg-12" value='Borrar producto'/>
+					</form>
+				</div>
+				<div class="row"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

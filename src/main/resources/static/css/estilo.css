@@ -1,0 +1,85 @@
+*{
+    margin:0px;
+    padding:0px;
+}
+
+#contenedor{
+    width:1240px;
+    position:absolute;
+    margin-left:-625px;
+    left:50%;
+    padding: 5px 1px 0px 1px;
+}
+
+
+ul li:hover > ul{
+    display:block;
+}
+
+.ok{
+    color: #7dd800;
+}
+.delete{
+    color: #f82000;
+}
+
+.negro{
+	font-weight: bold;
+	color:black;
+}
+.rojo{
+	font-weight: bold;
+	color: #f82000;
+}
+
+.IVAincluido{
+    font-size: 1em;
+    color: #f82000;
+    font-weight: bold;
+}
+
+.precioproductolista{
+    color: #f82000;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.preciogrande{
+    color: #f82000;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.nombreproductolista{
+    color: #262626;
+    font-size: 1.7em;
+    font-weight: bold;
+}
+.letragrande{
+    color: #262626;
+    font-size: 2.2em;
+    font-weight: bold;
+}
+hr{
+    background-color: #31708f;
+    height: 1px;
+}
+
+#menu a{
+	font-weight:bold;
+}
+#footer ul{
+	list-style:none;
+}
+#footer li a{
+	text-decoration:none;
+	color:black;
+}
+#busquedaheader{
+	width:390px;
+	height:50px;
+	padding:5px;
+}
+
+#micuenta{
+	background-color:gray;
+}

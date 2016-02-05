@@ -1,0 +1,114 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Mi cuenta Poxmania y yo - Poxmania</title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div id="contenedor">
+		<div th:include="header :: #copy"></div>	
+		<div class="row">
+			<h1 class="text-primary">Mi cuenta</h1>
+		</div>
+		<div class="row">
+			<b>Hola, </b>
+			<b th:text="${session.usuario.nombrecompleto}"></b>
+			 - 
+			<a href="/logout">Desconectarse</a>
+		</div>
+		<div class="col-lg-3 panel panel-default">
+			<ul>
+				<li>
+					<a href="/micuenta">
+						<span>Mi cuenta</span>
+					</a>
+				</li>
+				<li>
+					<a href="/misdatospersonales">
+						<span>Mis datos personales</span>
+					</a>
+				</li>
+				<li>
+					<a href="/mispedidos">
+						<span>Mis pedidos</span>
+					</a>
+				</li>
+			</ul>    	
+		</div>	              
+		<div class="col-lg-8">
+			<div class="panel panel-default">
+				<h3 class="row col"><b>Mis datos personales</b></h3>
+				<p class="row">
+					<b class="col-lg-4" th:text="${session.usuario.nombrecompleto}"></b>
+				</p>
+				<p class="row">
+					<span class="col-lg-5">
+						E-mail: <a th:text="${session.usuario.correo}"></a>
+					</span>
+					<span class="col-lg-4">
+						Teléfono: <a th:text="${session.usuario.telefono}"></a>
+					</span>
+				</p>
+				<p class="row">
+					<a href="/misdatospersonales">
+						<span class="glyphicon glyphicon-edit"></span>
+						Modificar
+					</a>
+				</p> 
+			</div> 
+			<div class="panel panel-default">
+				<h3 class="row"><b>Seguimiento de tu último pedido</b></h3>
+				<div th:if="${ultimopedido.getListaproductos().size()}!=0">
+					<p class="row">
+						<span class="col-lg-5">
+							Fecha del pedido: <a th:text="${ultimopedido.fecha}"></a>
+						</span>
+					</p>
+					<p class="row">
+						<span class="col-lg-4">
+							Importe total: <a class="rojo" th:text="|${ultimopedido.factura()}€|"></a>
+						</span>
+					</p>
+					<p class="row">
+						<span class="col-lg-4">
+							Estado: 	
+							<span th:if="${ultimopedido.estado}=='En trámite'">
+								<a class="text-warning"> En trámite</a>
+							</span>
+							<span th:if="${ultimopedido.estado}=='Preparado'">
+								<b class="text-success">Preparado</b>
+							</span>
+						</span>
+					</p>               					
+				</div>
+				<div th:unless="${ultimopedido.getListaproductos().size()}!=0">
+					<h3 class="text-warning">
+						<span class="glyphicon glyphicon-remove"></span>
+						Todavía no has realizado ningún pedido
+					</h3>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<h3 class="row"><b>Tu dirección de entrega</b></h3>               					
+				<p class="row">
+					<b class="col-lg-4" th:text="${session.usuario.nombrecompleto}"></b>
+				</p>
+				<p class="row">
+					<a class="col-lg-4" th:text="${session.usuario.direccion}"></a>
+				</p>
+				<p class="row">
+					<a href="/misdatospersonales">
+						<span class="glyphicon glyphicon-edit"></span>
+						Modificar
+					</a>
+				</p>                					
+			</div>     					
+		</div>
+		<div th:include="footer :: #copy"></div>
+	</div>
+</body>
+</html>

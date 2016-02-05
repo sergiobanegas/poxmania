@@ -1,0 +1,128 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div id="copy">
+		<div id="header" class="row">
+			<div class="col-lg-3">
+				<a href="/" title="inicio"  >
+					<img src="/imagenes/banner.png"></img>
+				</a>
+			</div>
+			<div class="col-lg-4 well col-lg-offset-1" id="busquedaheader">    	
+				<form method='get' action='/busqueda'>
+					<div class="form-group col-lg-9">
+						<input class="form-control" type="search" name="nombre" placeholder="¿Qué estás buscando?"/>
+					</div>
+					<input type='submit' class="btn btn-primary" value='Buscar'/>
+				</form>
+			</div>
+			<div class="col-lg-3  col-lg-offset-1">
+				<div class="row">
+					<div class="col-lg-5">
+						<a href="/micuenta" type="button" class="btn btn-primary">
+							<span class="glyphicon glyphicon-user"></span>
+							<span>Mi cuenta</span>
+						</a>
+					</div>
+					<div class="col-lg-5 col-lg-offset-1">
+						<a href="/carrito" type="button" class="btn btn-primary">
+							<span class="glyphicon glyphicon-shopping-cart"></span>
+							<span>Cesta</span>
+							<span th:if="${session.carrito}!=null">
+								<span th:if="${session.carrito.numerodeproductos()}!=0">
+									(
+									<span th:text="${session.carrito.numerodeproductos()}"></span>
+									)
+								</span>
+								<span th:unless="${session.carrito.numerodeproductos()}!=0">
+									<span>(0)</span>
+								</span>
+							</span>
+						</a>    
+					</div>
+				</div>
+				<div th:if="${session.usuario}!=null">
+					<div class="row">
+						<a href="/logout" type="button" class="btn btn-primary col-lg-12">
+							<span class="glyphicon glyphicon-log-out"></span>
+							<span>Cerrar sesión</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="collapse navbar-collapse navbar-default" id="menu">
+			<ul class="nav navbar-nav">
+				<li>
+					<a href="/" class="glyphicon glyphicon-home"></a>
+				</li> 
+				<li class="dropdown">
+					<a href="/mostrarporcategoria?nombre=Electrodomesticos" class="dropdown-toggle">Pequeños Electrodomésticos</a>
+					<ul class="dropdown-menu">                                
+						<li>
+							<a href="/mostrarporcategoria?nombre=Mantenimiento%20y%20limpieza">Mantenimiento y limpieza</a>
+							<a href="/mostrarporcategoria?nombre=Cocina">Cocina</a>
+						</li>                                					
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="/mostrarporcategoria?nombre=Televisiones" class="dropdown-toggle">Televisiones</a>
+					<ul class="dropdown-menu">                                
+						<li>
+							<a href="/mostrarporcategoria?nombre=Televisor%20LED">Televisor LED</a>
+							<a href="/mostrarporcategoria?nombre=Televisor%20Ultra%20HD">Televisor Ultra HD</a>
+							<a href="/busquedaporcategoria?nombre=Accesorios">Accesorios</a>
+						</li>                                
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="/mostrarporcategoria?nombre=Informatica" class="dropdown-toggle">Informática</a>
+					<ul class="dropdown-menu">                                
+						<li>
+							<a href="/mostrarporcategoria?nombre=Ordenadores%20de%20sobremesa">Ordenadores de sobremesa</a>
+							<a href="/mostrarporcategoria?nombre=Portatiles">Portátiles</a>
+							<a href="/mostrarporcategoria?nombre=Perifericos">Periféricos</a>
+						</li>                                
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="/mostrarporcategoria?nombre=Videoconsolas" class="dropdown-toggle">Videoconsolas</a>
+					<ul class="dropdown-menu">                                
+						<li>
+							<a href="/mostrarporcategoria?nombre=Consolas">Consolas</a>
+							<a href="/mostrarporcategoria?nombre=Videojuegos">Videojuegos</a>
+						</li>                                
+					</ul>
+				</li>
+ 				<li class="dropdown">
+					<a href="/mostrarporcategoria?nombre=Sonido" class="dropdown-toggle">Sonido</a>
+					<ul class="dropdown-menu">                                
+						<li>
+							<a href="/mostrarporcategoria?nombre=Reproductores%20MP3">Reproductores MP3</a>
+							<a href="/mostrarporcategoria?nombre=Auriculares">Auriculares</a>
+						</li>                                
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="/mostrarporcategoria?nombre=Fotografia%20y%20video" class="dropdown-toggle">Fotografía y vídeo</a>
+  					<ul class="dropdown-menu">                                
+						<li>
+							<a href="/mostrarporcategoria?nombre=Reflex%20y%20hibrida">Reflex y Híbrida</a>
+							<a href="/mostrarporcategoria?nombre=Objetivos%20y%20flashes">Objetivos y flashes</a>
+							<a href="/mostrarporcategoria?nombre=Tarjetas%20de%20memoria">Tarjetas de memoria</a>
+						</li>                                
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="/mostrarporcategoria?nombre=Telefonia%20y%20GPS" class="dropdown-toggle">Telefonía y GPS</a>
+					<ul class="dropdown-menu">                                
+						<li>
+							<a href="/mostrarporcategoria?nombre=Telefonos">Teléfonos</a>
+							<a href="/mostrarporcategoria?nombre=Accesorios%20para%20movil">Accesorios para móvil</a>
+						</li>                                
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>	
+</body>
+</html>

@@ -1,0 +1,100 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Administración -  Nuevo producto | Poxmanía</title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>	
+	<div id="contenedor">
+		<div th:include="administracion/menuadministracion :: #copy"></div>
+		<div class="row">
+			<h2 class="text-primary">Agregar nuevo producto</h2>
+			<div th:if="${errorprecio}==true">
+				<span class="text-danger">    
+					<span class="glyphicon glyphicon-remove"></span>
+					<b>Introduzca un precio válido</b>
+				</span>
+			</div>				
+			<div th:if="${correcto}==true">
+				<span class="text-success">
+					<span class="glyphicon glyphicon-floppy-saved"></span>
+					<b>Producto añadido correctamente a la tienda</b>
+				</span>
+			</div>
+			<div th:if="${correcto}==false">
+				<b class="text-danger">
+					<span class="glyphicon glyphicon-remove"></span>
+					Error subir la imagen del producto
+				</b>
+			</div>
+			<div th:if="${yaexiste}==true">
+				<span class="text-danger">
+					<span class="glyphicon glyphicon-remove"></span>
+						<b th:text="|El producto con nombre ${productoainsertar} ya existe en la tienda|"></b>
+				</span>
+			</div>
+			<div th:if="${errorimagen}==true">
+				<span class="text-danger">
+					<span class="glyphicon glyphicon-remove"></span>					
+					<b>Ya existe una imagen con ese nombre</b>
+				</span>
+			</div>
+			<form class="panel panel-default" method= "post" action='./insertar' enctype="multipart/form-data">
+				<div class="row well">
+					<span class="col-lg-2">
+						<b>Nombre:</b>
+						<input type='text' name='nombre' required="required"/> 
+					</span>
+					<span class="col-lg-2">
+						<b>Precio:</b>
+						<input type='text' name='precio' required="required"/>
+					</span>
+					<span class="col-lg-2">
+						<b>Stock:</b>
+						<input type='number' min="0" name='cantidad' required="required"/>
+					</span>
+					<span class="col-lg-2">
+						<b>Categoría:</b>
+						<select name="categoria"> 
+							<option value='Mantenimiento y limpieza'>Mantenimiento y limpieza</option>
+							<option value='Cocina'>Cocina</option>
+							<option value='Televisor LED'>Televisor LED</option>
+							<option value='Televisor Ultra HD'>Televisor Ultra HD</option>
+							<option value='Accesorios'>Accesorios televisión</option>
+							<option value='Ordenadores de sobremesa'>Ordenadores de sobremesa</option>
+							<option value='Portatiles'>Ordenadores portátiles</option>
+							<option value='Perifericos'>Periféricos</option>
+							<option value='Consolas'>Consolas</option>
+							<option value='Videojuegos'>Videojuegos</option>
+							<option value='Reproductores MP3'>Reproductores MP3</option>
+							<option value='Auriculares'>Auriculares</option>
+							<option value='Reflex y hibrida'>Reflex y Híbrida</option>								<option value='Objetivos y flashes'>Objetivos y flashes</option>
+							<option value='Tarjetas de memoria'>Tarjetas de memoria</option>
+							<option value='Telefonos'>Teléfonos</option>
+							<option value='Accesorios para movil'>Accesorios para móvil</option>
+						</select>
+					</span>
+				</div>
+				<div class="row well">
+					<b>Descripción:</b>
+						<textarea class="form-control" name='descripcion' rows="5" style="width: 500px;" required="required"></textarea>
+				</div>
+				<div class="row well">           
+					<span class="col-lg-3">
+						<b>Nombre de la imagen:</b>
+						<br/>
+						<input type="text" required="required" name="nombreimagen"/>
+						<br/>
+					</span>  
+					<span class="col-lg-4 col-lg-offset-3">Seleccione una imagen desde su ordenador:<input type="file" name="imagen" required="required" width="100px"/></span>                  
+						<input type="submit" class="btn btn-primary" value="Añadir producto"/>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

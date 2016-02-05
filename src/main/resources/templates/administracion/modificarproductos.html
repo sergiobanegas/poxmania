@@ -1,0 +1,61 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Administración - Modificar productos | Poxmania</title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>	
+	<div id="contenedor">
+		<div th:include="administracion/menuadministracion :: #copy"></div>            
+		<div class="row">
+			<h2 class="col-lg-4 text-primary">Editar o Eliminar Productos</h2>
+			<div class="col-lg-4 well" id="busquedaheader">
+				<form class="form-group" method="get" action="./modificarproductosfiltrados">
+					<div class="form-group col-lg-9"> 
+						<input type="text" class="form-control" name="nombre" placeholder="Buscar por nombre"/>
+					</div>
+					<input type="submit" class="btn btn-primary" value="Buscar"/>
+				</form>
+			</div>
+		</div>   
+		<div th:if="${borrado}==true" class="col-lg-3 text-success">
+			<span class="glyphicon glyphicon-floppy-saved"></span>
+			<b>Producto borrado correctamente</b>
+		</div>        
+		<div th:if="${productos}!=null">
+			<div class="well col-lg-9 col-lg-offset-2">
+				<div th:each="producto, iterador : ${productos}">
+					<div class="panel panel-default">
+						<a  class="row" th:href="@{./mostrarproductoamodificar(id=${producto.id})}">
+							<h3>
+								<span class="col-lg-2">
+									<img width="80px" th:src="|/imagenes/Productos/${producto.imagen}|"/>
+								</span>
+								<span class="col-lg-9">
+									<span th:text="|${producto.nombre}"></span>
+									   -  
+									<span class="text-success" th:text="${producto.categoria}"></span>
+								</span>
+							</h3>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:unless="${productos}!=null">
+			<div class="well col-lg-8 col-lg-offset-2 text-center">
+				<h3 class="text-primary" th:if="${noencontrado}==null">
+					No hay productos en la tienda para mostrar
+				</h3>
+				<h3 class="text-warning" th:if="${noencontrado}!=null">
+					No hay productos con ese nombre
+				</h3>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

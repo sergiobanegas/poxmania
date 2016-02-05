@@ -1,0 +1,76 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Poxmania: Venta Online de productos en Informática, Foto, Electrodomésticos</title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>	
+	<div id="contenedor">
+		<div th:include="header :: #copy"></div>	
+		<div id="carouselpoxmania" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators">
+				<li data-target="#carouselpoxmania" data-slide-to="0" class="active"></li>
+				<li data-target="#carouselpoxmania" data-slide-to="1"></li>
+				 <li data-target="#carouselpoxmania" data-slide-to="2"></li>
+			</ol>
+			<div class="carousel-inner">
+				<div class="active item">
+					<img src="/imagenes/carousel/carousel1.jpg"></img>
+				</div>
+				<div class="item">
+					<img src="/imagenes/carousel/carousel2.gif"></img>
+				</div>
+				<div class="item">
+					<img src="/imagenes/carousel/carousel3.jpg"></img>
+				</div>
+			</div>
+ 			<a class="carousel-control left" href="#carouselpoxmania" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</a>
+			<a class="carousel-control right" href="#carouselpoxmania" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</a>                    
+		</div>
+		<div class="row">
+			<h2 class="row">Productos nuevos en la tienda:</h2>
+			<div class="panel panel-default row text-center">
+				<div th:if="${sinproductos}==true">
+					<h1 class="text-primary">No hay productos para mostrar en la tienda</h1>
+				</div>		
+				<div th:each="producto : ${productos}">
+					<div class="col-lg-2">
+						<a class="row" th:href="@{/mostrar(id=${producto.id})}"><img width="150px" th:src="|/imagenes/Productos/${producto.imagen}|"/></a>
+						<a class="nombreproductolista" th:href="@{/mostrar(id=${producto.id})}" th:text="${producto.nombre}"></a>
+						<a class="precioproductolista" th:href="@{/mostrar(id=${producto.id})}" th:text="|${producto.precio}€|"></a>
+ 						<div th:if="${producto.unidades}>0">
+							<span class="glyphicon glyphicon-ok ok"></span>
+							<span class="text-info">En Stock</span>
+						</div>
+                		<div th:unless="${producto.unidades}>0">                                  
+							<span class="glyphicon glyphicon-remove delete"></span>
+							<span class="text-info">Sin existencias</span>
+                		</div>
+					</div>	   
+				</div>
+			</div>	
+		</div>
+		<div class="row">
+			<img src="imagenes/ofertas/separador1.jpg"></img>
+			<a href="/mostrarporcategoria?nombre=Auriculares"><img src="imagenes/ofertas/auriculares.jpg"  class="col-lg-3"></img></a>
+			<a href="/mostrarporcategoria?nombre=Videojuegos"><img src="imagenes/ofertas/videojuegos.jpg" class="col-lg-3"></img></a>
+			<a href="/mostrarporcategoria?nombre=Televisiones"><img src="imagenes/ofertas/television.jpg" class="col-lg-3"></img></a>
+			<a href="/mostrarporcategoria?nombre=Reflex%20y%20hibrida"><img src="imagenes/ofertas/nuevascamaras.jpg" class="col-lg-3"></img></a>
+			<img src="imagenes/ofertas/separador2.jpg"></img>
+			<a href="/mostrarporcategoria?nombre=Objetivos%20y%20flashes"><img src="imagenes/ofertas/objetivo.jpg" class="col-lg-3"></img></a>
+			<a href="/mostrarporcategoria?nombre=Telefonos"><img src="imagenes/ofertas/apple.jpg" class="col-lg-3"></img></a>
+			<a href="/mostrarporcategoria?nombre=Mantenimiento%20y%20limpieza"><img src="imagenes/ofertas/plancha.jpg" class="col-lg-3"></img></a>
+			<a href="/mostrarporcategoria?nombre=Cocina"><img src="imagenes/ofertas/batidoras.jpg" class="col-lg-3"></img></a>
+		</div>
+		<div th:include="footer :: #copy"></div>
+	</div>
+</body>
+</html>

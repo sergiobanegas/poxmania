@@ -1,0 +1,70 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title th:text="|${producto.nombre} - Poxmania|"></title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>	
+	<div id="contenedor">
+		<div th:include="header :: #copy"></div>
+			<div class="row letragrande">
+				<a th:text="${producto.nombre}"></a>
+			</div>
+			<div class="row">
+				<div class="col-lg-3 panel panel-default">
+					<img class="row center-block" width="260px" th:src="|/imagenes/Productos/${producto.imagen}|"></img>
+				</div>
+			<div class="col-lg-6">  
+				<div class="col5">
+					<span class="preciogrande" th:text="|${producto.precio}€|"></span>
+						 <small class="ivaincluido">IVA incluido </small>
+ 				</div>                    
+				<div class="row well center-block">
+					<h2 class="text-info">Descripción:</h2>
+					<p>
+						<a class="negro" th:text="${producto.descripcion}"></a>
+					</p>
+				</div>
+			</div>
+			<div class="panel panel-default col-lg-3">
+				<div th:if="${producto.unidades}>'0'">
+					<a class="btn btn-link row col-lg-12" th:href="@{/meteralcarrito(identificador=${producto.id})}">
+                                <span class="glyphicon glyphicon-shopping-cart center-block"></span>
+                                Añadir a la cesta 
+					</a>
+				</div>
+				<div th:unless="${producto.unidades}>'0'">
+					<a class="btn btn-warning row col-lg-12">
+						<span class="glyphicon glyphicon-shopping-cart center-block"></span>
+							No disponible 
+  					</a>
+				</div>
+				<div class="row col-lg-12 text-center">
+					<div th:if="${producto.unidades}>0">
+						<span class="glyphicon glyphicon-ok ok"></span>
+						<span class="text-info">
+							En Stock.
+							<br/>
+							<br/>
+							Plazo de entrega 4-6 días hábiles.
+						</span>
+					</div>
+					<div th:unless="${producto.unidades}>0">                                  
+						<div class="text-info text-center">
+							<span class="glyphicon glyphicon-remove delete"></span>
+							Sin existencias
+						</div>
+					</div>
+					<br/>
+					<div class="text-warning text-center">Sin gastos de envío</div>
+				</div>
+			</div>
+		</div>
+		<div th:include="footer :: #copy"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Administración | Poxmania</title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>	
+	<div id="contenedor">
+		<div th:if="${session.usuario}!=null">
+			<div th:if="${session.usuario.privilegios}==true">
+				<div th:include="administracion/menuadministracion :: #copy"></div>
+					<div class="row">
+						<div class="panel panel-title text-center col-lg-6 col-lg-offset-3">
+							<h3 class="text-primary">BIENVENIDO AL MENÚ DE ADMINISTRACIÓN</h3>
+						</div>
+					</div>
+				</div>
+			<div th:unless="${session.usuario.privilegios}==true">
+				<div th:include="header :: #copy"></div>
+					<div class="panel panel-default row">
+						<h1 class="text-danger">
+							<span class="glyphicon glyphicon-ban-circle"></span>
+							Lo siento, no tienes permisos de administración de Poxmania
+						</h1>	
+					 </div>
+				<div th:include="footer :: #copy"></div>
+			</div>
+		</div>
+		<div th:unless="${session.usuario}!=null">
+			<div th:include="header :: #copy"></div>
+				<div class="panel panel-default row">
+					<h1 class="text-danger">
+						<span class="glyphicon glyphicon-ban-circle"></span>
+							Lo siento, no tienes permisos de administración de Poxmania
+					</h1>
+				</div>				
+		  	<div th:include="footer :: #copy"></div>
+		</div>
+		</div>
+</body>
+</html>

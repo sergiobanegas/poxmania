@@ -1,0 +1,101 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title th:text="${titulo}"></title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div id="contenedor">
+		<div th:include="header :: #copy"></div>
+			<h1 class="text-primary" th:text="${titulo}"></h1>                   
+			<div class="row"> 
+				<b>Afinar tu búsqueda</b>
+				<br/>        
+				<div class="col-lg-3 panel panel-default" style="padding:0px;">
+					<div class="panel panel-default" style="margin:0px;">
+						<b >Buscar por precio:</b>
+						<div th:if="${errorprecio}==true">
+							<b class="text-danger">Introduce un rango de precios válido</b>
+						</div>
+						<form  method="get" action="/buscarporrango">
+							<input type="hidden" name="seccion" th:value="${titulo}"/>
+								<div class="row">Desde:<input type="text" name="desde" required="required"/>
+								<br/>
+								<span>Hasta:</span> <input type="text" name="hasta" required="required"/>
+								</div>
+								<div class="row">
+									<input type="submit" class="btn btn-primary col-lg-6" value="Buscar"/>
+								</div>            
+						</form>
+					</div>
+					<div class="panel panel-default" style="margin:0px;">
+						<b class="row">Elegir rango de precios:</b>            	
+						<p class="row">
+							<a th:href="@{/buscarporrango(seccion=${titulo},desde='0',hasta='20')}">Menos de 20€</a>
+						</p>
+						<p class="row">
+							<a th:href="@{/buscarporrango(seccion=${titulo},desde='20',hasta='40')}">20€ - 40€</a>
+						</p>
+						<p class="row">
+							<a th:href="@{/buscarporrango(seccion=${titulo},desde='40',hasta='60')}">40€ - 60€</a>
+						</p>
+						<p class="row">
+							<a th:href="@{/buscarporrango(seccion=${titulo},desde='60',hasta='80')}">60€ - 80€</a>
+						</p>
+						<p class="row">
+							<a th:href="@{/buscarporrango(seccion=${titulo},desde='80',hasta='100')}">80€ - 100€</a>
+						</p>
+						<p class="row">
+							<a th:href="@{/buscarporrango(seccion=${titulo},desde='100',hasta='99999')}">Más de 100€</a>
+						</p>            	
+					</div>
+				</div>
+			<div class="col-lg-9">
+				<div th:if="${listaproductos.size()}!=null">
+					<form  method="get" action="/ordenarproductos" class="col-lg-offset-10" >
+						<input type="hidden" name="titulo" th:value="${titulo}"/>
+						<select name="modo" class="form-control text-center" onchange="this.form.submit();">
+							<option selected="selected">Ordenar</option>
+							<option value="creciente">Precio Creciente </option>
+							<option value="decreciente">Precio Decreciente </option>
+						</select>
+					</form>
+					<div th:each="producto : ${listaproductos}">
+						<div class="row panel panel-default">
+							<a class="col-lg-2" th:href="@{/mostrar(id=${producto.id})}">
+								<img width="100px" th:src="|/imagenes/Productos/${producto.imagen}|"></img>
+							</a>
+							<a class="col-lg-5 nombreproductolista" th:href="@{/mostrar(id=${producto.id})}" th:text="${producto.nombre}"></a>
+							<a class="col-lg-4 col-lg-offset-1" th:href="@{/mostrar(id=${producto.id})}">
+								<span class="precioproductolista" th:text="|${producto.precio}€|"></span>
+								<span th:if="${producto.unidades}>0">
+									<span class="glyphicon glyphicon-ok ok"></span>
+									<span>En Stock</span>
+								</span>
+								<span th:unless="${producto.unidades}>0">
+									<span class="glyphicon glyphicon-remove delete"></span>
+									<span>Sin existencias</span>
+								</span>
+							</a> 
+						</div>
+					</div>
+				</div>
+				<div th:unless="${listaproductos.size()}!=0">
+					<div class="well">
+						<div class="row panel panel-default text-center">	                        
+							<h3 class="text-warning">No hay productos para mostrar</h3> 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div th:include="footer :: #copy"></div>
+		</div>
+	</div>
+</body>
+</html>

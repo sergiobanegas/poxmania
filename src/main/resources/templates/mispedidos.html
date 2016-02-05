@@ -1,0 +1,106 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Mi historial de pedidos - | Poxmania</title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	 <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div id="contenedor">
+		<div th:include="header :: #copy"></div>	
+		<div class="row">
+			<h1 class="text-primary">Mis pedidos</h1>
+		</div>
+		<div class="row">
+			<b>Hola, </b>
+			<b th:text="${session.usuario.nombrecompleto}"></b>
+			 - 
+			 <a href="/logout">Desconectarse</a>
+		</div>
+		<div class="col-lg-3 panel panel-default">
+			<ul>
+				<li>
+					<a href="/micuenta">
+						<span>Mi cuenta</span>
+					</a>
+				</li>
+				<li>
+					<a href="/misdatospersonales">
+						<span>Mis datos personales</span>
+					</a>
+				</li>
+				<li>
+					<a href="/mispedidos">
+						<span>Mis pedidos</span>
+					</a>
+				</li>
+			</ul>    	
+		</div>
+		<div th:if="${session.mispedidos}!=null">
+			<div class="col-lg-8 col-lg-offset-1">
+				<div th:each="pedido : ${session.mispedidos}">            	
+					<div class="well">
+						<h3>
+							Pedido con fecha: 
+							<span class="text-primary" th:text="${pedido.fecha}"></span>
+							 - Estado: 
+							<span th:if="${pedido.estado}=='Preparado'">
+								<b class="text-success" th:text="${pedido.estado}"></b>
+							</span>
+							<span th:unless="${pedido.estado}=='Preparado'">
+								<span class="text-warning" th:text="${pedido.estado}"></span>
+							</span>
+		            	 </h3>               
+						<div th:each="producto : ${pedido.listaproductos}">                    
+							<div th:if="|${producto.estado}!='carrito'|">                                                    
+								<div class="row panel panel-default">
+									<a class="col-lg-2" th:href="@{/mostrarproductocarrito(nombre=${producto.nombre})}">
+										<img width="80px" th:src="|/imagenes/Productos/${producto.imagen}|"/>
+									</a>
+									<div class="col-lg-4">
+										<b th:href="@{/mostrarproductocarrito(nombre=${producto.nombre})}" th:text="${producto.nombre}"></b>                                        
+										<p class="row">
+											<b>Cantidad: </b>
+											<a th:text="${producto.cantidad}"></a>
+										</p>                                       
+									</div>
+									<br/>  
+									<div class="col-lg-5 col-lg-offset-1">      
+										<b>     
+											<span th:text="|${producto.precio}€|"></span>
+											 x 
+											 <a th:text="${producto.cantidad}"></a>
+											  =     
+											<span th:with="total=${producto.cantidad * producto.precio}">
+												<span class="IVAincluido" th:text="|${total}€|"></span>
+											</span>
+										</b>
+									</div>
+								</div>    
+							</div>
+						</div>                             
+						<div class="row">
+							<span class="nombreproductolista col-lg-2 col-lg-offset-7">
+								<b>Total: </b>
+							</span>
+							<span class="preciogrande" th:text="|${pedido.factura()}€|"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:unless="${session.mispedidos}!=null">
+			<div class="panel panel-default col-lg-8 col-lg-offset-1 text-center">
+ 				<h3 class="text-warning">
+ 					<span class="glyphicon glyphicon-remove"></span>
+ 					Todavia no has realizado ningun pedido
+ 				</h3>
+			</div>               		
+		</div>
+		<div th:include="footer :: #copy"></div>
+	</div>
+</body>
+</html>

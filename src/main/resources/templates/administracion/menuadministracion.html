@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div id="copy">
+		<div id="header" class="row">    
+	    	<div class="col-lg-3">
+				<a href="/" title="Página principal">
+					<img src="/imagenes/banner.png"/>
+	        	</a>
+	    	</div>
+		    <div class="col-lg-4 well col-lg-offset-1 text-center">
+				<h2 th:text="${seccion}"></h2>
+		    </div>
+		    <div class="col-lg-3 col-lg-offset-1">
+				<span class="col-lg-5">
+		        	<a href="/logout" type="button" class="btn btn-primary">
+		            	<span class="glyphicon glyphicon-log-out"></span>
+		                <span>Cerrar Sesión</span>
+		            </a>
+		        </span>
+		    </div>
+		</div>
+		<div id="menu" class="collapse navbar-collapse navbar-default ">
+		    <ul class="nav navbar-nav">
+		    	<li>
+		    		<a href="/" class="glyphicon glyphicon-home"></a>
+		    	</li>
+				<li>
+		            <a href="./nuevoproducto">Nuevo producto</a>
+		        </li>
+		        <li>
+		        	<a href="./modificarproductos">Modificar productos</a>
+		        </li>        
+		        <li>
+		        	<a href="./prepararpedidos">Preparar pedidos</a>
+		        </li>
+		    </ul>
+		</div>
+	</div>
+</body>
+</html>

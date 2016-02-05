@@ -1,0 +1,113 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Mis datos personales | Poxmania</title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div id="contenedor">
+		<div th:include="header :: #copy"></div>	
+		<div class="row">
+			<h1 class="text-primary">Mis datos personales</h1>
+		</div>
+		<div class="row">
+			<b>Hola, </b>
+			<b th:text="${session.usuario.nombrecompleto}"></b>
+			 - 
+			 <a href="/logout">Desconectarse</a>
+		</div>
+		<div class="col-lg-3 panel panel-default">
+			<ul>
+				<li>
+					<a href="/micuenta">
+						<span>Mi cuenta</span>
+					</a>
+				</li>
+				<li>
+					<a href="/misdatospersonales">
+						<span>Mis datos personales</span>
+					</a>
+				</li>
+				<li>
+					<a href="/mispedidos">
+						<span>Mis pedidos</span>
+					</a>
+				</li>
+			</ul>    	
+		</div>
+		<div class="col-lg-8 col-lg-offset-1">
+			<h3>Mis datos personales</h3>
+		</div>                
+		<div class="col-lg-8 col-lg-offset-1 panel panel-default">
+			<form method="post" action="/cambiardatospersonales">
+				<p class="row">	
+					<input type="hidden" name="id" th:value="${session.usuario.id}"/>
+					<span class="col-lg-4">Nombre de la cuenta:</span>
+					<input type="text" name="nombre" th:placeholder="${session.usuario.nombre}"/>
+					<b th:if="${errornombre}==true" class="text-danger">
+						Ya existe un usuario con ese nombre
+					</b>
+				</p>       					
+				<p class="row">
+					<span class="col-lg-4">Nombre completo:</span>
+					<input type="text" name="nombrecompleto" th:placeholder="${session.usuario.nombrecompleto}"/>
+				</p>
+				<p class="row">
+					<span class="col-lg-4">Teléfono:</span>
+					<input type="text" name="telefono" th:placeholder="${session.usuario.telefono}"/>
+				</p>
+				<p class="row">
+					<span class="col-lg-4">Correo electrónico:</span>
+					<input type="text" name="correo" th:placeholder="${session.usuario.correo}"/>
+					<b th:if="${errorcorreo}==true" class="text-danger">
+						Ya existe un usuario con ese correo electrónico
+					</b>
+				</p>               					               					
+				<input type="submit" class="btn btn-primary row col-lg-offset-4" value="Validar"/>
+			</form>      	
+		</div>
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-4">
+				<h3>Mi contraseña</h3>
+			</div>
+		</div>
+		<div class="row">               	
+			<div class="col-lg-8 col-lg-offset-4 panel panel-default">
+				<div th:if="${mensaje}=='correcto'">
+					<b class="text-success">Contraseña cambiada con éxito</b>
+				</div>
+				<div th:if="${mensaje}=='nocoinciden'">
+					<b class="text-danger">La confirmación de contraseña no coincide</b>
+				</div>	
+				<div th:if="${mensaje}=='erronea'">
+					<b class="text-danger">Contraseña actual errónea</b>
+				</div>
+				<div th:if="${mensaje}=='mismapass'">
+					<b class="text-danger">La nueva contraseña coincide con la antigua</b>
+				</div>
+				<form method="post" action="/cambiarpass">               					
+					<input type="hidden" name="id" th:value="${session.usuario.id}"/>
+					<p class="row">
+						<span class="col-lg-4">Mi contraseña actual: </span>
+						<input type="password" name="passantigua"/>
+					</p>
+					<p class="row">
+						<span class="col-lg-4">Nueva contraseña:</span>
+						<input type="password" name="pass1"/>
+					</p>
+					<p class="row">
+						<span class="col-lg-4">Confirmación contraseña:</span>
+						<input type="password" name="pass2"/>
+					</p>
+					<input type="submit" class="btn btn-primary row col-lg-offset-4" value="Validar"/>
+				</form>
+			</div>
+		</div>
+		<div th:include="footer :: #copy"></div>
+	</div>
+</body>
+</html>

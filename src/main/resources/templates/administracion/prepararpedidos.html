@@ -1,0 +1,89 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Administración - Preparar pedidos | Poxmanía</title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/estilo.css"/>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>	
+	<div id="contenedor">
+		<div th:include="administracion/menuadministracion :: #copy"></div>
+		<div class="row">
+			<h2  class="text-primary">Preparar pedidos</h2>
+			<b class="text-success" th:text="${borrado}"></b>
+			<div th:if="${session.pedidos.size()}!=0">
+				<div class="panel panel-default">
+					<div th:each="pedido, iterador : ${session.pedidos}">
+						<div th:if="${pedido.estado}!='carrito'">
+							<div data-toggle="collapse" data-parent="#accordion" th:href="|#${iterador.index}|">
+								<div class="well">
+									<h3 class="row">
+										<span class="col-lg-5">
+											Pedido con fecha 
+											<span class="text-primary" th:text="| ${pedido.fecha}|"></span>
+										</span> 
+										<span class="col-lg-3 col-lg-offset-3">
+ 											Estado: 
+											<span th:if="${pedido.estado}=='En trámite'">
+												<span class="text-warning" th:text="|  ${pedido.estado}|"></span>
+											</span>
+											<span th:if="${pedido.estado}=='Preparado'">
+												<b class="text-success" th:text="|  ${pedido.estado}|"></b>
+											</span>
+										</span>
+									</h3>
+								</div>
+							</div>
+							<div th:id="${iterador.index}" class="row panel-collapse collapse">                                
+								<div class="col-lg-5">
+									<p>
+										<b>Nombre del cliente: </b>
+										<a th:text="${pedido.nombreusuario}"></a>
+									</p>
+									<p>
+										<b>Importe de la factura: </b>
+									<a class="rojo" th:text="|${pedido.factura()}€|"></a>
+									</p>	
+									<address>
+										<abbr>Dirección: </abbr>
+										<a th:text="${pedido.direccion}"></a>
+										<br/>
+										<abbr>Teléfono: </abbr><a th:text="${pedido.telefono}"></a>                                      
+									</address>
+									<div th:if="${pedido.estado}!='Preparado'">   
+										<a th:href="@{./prepararpedido(fecha=${pedido.fecha})}">
+											<span class="btn btn-primary">Preparar Pedido</span>
+										</a>                           
+									</div>
+								</div>
+								<table>
+									<tr>
+										<td>
+											<strong>Producto</strong>
+										</td>
+										<td>
+											<strong>Cantidad</strong>
+										</td>
+									</tr>
+									<tr th:each="producto : ${pedido.getListaproductos()}">
+										<td th:text="${producto.nombre}"></td>
+										<td th:text="${producto.cantidad}" style="text-align:center;"></td>
+									</tr> 
+								</table>                                                      
+							</div>
+						</div>
+					</div>
+				</div>   
+			</div>	
+			<div th:unless="${session.pedidos.size()}!=0">
+				<div class="panel panel-title text-center col-lg-6 col-lg-offset-3">
+					<h3 class="text-primary">Todavía no han hecho ningún pedido</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
